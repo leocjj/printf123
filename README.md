@@ -7,7 +7,7 @@ C - printf.
 * Write your own printf function.
 
 
-### Requirements
+### Requirements:
 
 * Allowed editors: vi, vim, emacs
 * All your files will be compiled on Ubuntu 14.04 LTS
