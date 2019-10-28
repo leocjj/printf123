@@ -36,19 +36,39 @@ void free_temp(char *temp_s)
 }
 
 /**
+ * concat_c - Function that concatenate a strings with a char.
+ * @buffer: string base to add the next parameter.
+ * @args: argument with string to be add.
+ *
+ * Return: String already concatenate
+ */
+void concat_c(char *buffer, va_list args)
+{
+	int temp_d;
+
+	char b[] = {'\0', '\0'};
+	char *temp_c = b;
+
+	temp_d = va_arg(args, int);	/*if (temp_d == 0)] ????*/
+	*(temp_c + 0) = temp_d;
+	*(temp_c + 1) = '\0';
+	concat(buffer, temp_c);
+}
+
+/**
  * concat - Function that concatenate two strings.
  * @s1: string to which it should be added.
  * @s2: String to be add.
- * Return: String already concatenate
+ * Return: number of character added.
  */
-
-char *concat(char *s1, char *s2)
+int concat(char *s1, char *s2)
 {
 	int size_of_s1 = 0, size_of_s2 = 0, j = 0;
+	char *n = "(null)";
 
 	if (s1 == NULL)
 	{
-		return (NULL);
+		return (0);
 	}
 	else
 		while (s1[size_of_s1] != '\0')
@@ -56,7 +76,8 @@ char *concat(char *s1, char *s2)
 
 	if (s2 == NULL)
 	{
-		return (s1);
+		s2 = n;
+		size_of_s2 = 6;
 	}
 	else
 		while (s2[size_of_s2] != '\0')
@@ -66,5 +87,5 @@ char *concat(char *s1, char *s2)
 		s1[size_of_s1 + j] = s2[j];
 
 	s1[size_of_s1 + size_of_s2 + 1] = '\0';
-	return (s1);
+	return (size_of_s2);
 }
