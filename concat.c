@@ -38,30 +38,35 @@ void free_temp(char *temp_s)
 /**
  * concat_c - Function that concatenate a strings with a char.
  * @buffer: string base to add the next parameter.
- * @args: argument with string to be add.
+ * @character: character to add.
+ * @chars_printed: chars printed.
  *
  * Return: String already concatenate
  */
-void concat_c(char *buffer, va_list args)
+/*void concat_c(char *buffer, va_list args, int *chars_printed)*/
+void concat_c(char *buffer, int character, int *chars_printed)
 {
-	int temp_d;
-
 	char b[] = {'\0', '\0'};
 	char *temp_c = b;
 
-	temp_d = va_arg(args, int);	/*if (temp_d == 0)] ????*/
-	*(temp_c + 0) = temp_d;
+	/*temp_d = va_arg(args, int);	if (temp_d == 0)] ????*/
+	if (character)
+		*(temp_c + 0) = character;
+	else
+		*(temp_c + 0) = ' ';
 	*(temp_c + 1) = '\0';
-	concat(buffer, temp_c);
+	concat(buffer, temp_c, chars_printed);
 }
 
 /**
  * concat - Function that concatenate two strings.
  * @s1: string to which it should be added.
  * @s2: String to be add.
+ * @chars_printed: chars printed.
+ *
  * Return: number of character added.
  */
-int concat(char *s1, char *s2)
+int concat(char *s1, char *s2, int *chars_printed)
 {
 	int size_of_s1 = 0, size_of_s2 = 0, j = 0;
 	char *n = "(null)";
@@ -82,6 +87,13 @@ int concat(char *s1, char *s2)
 	else
 		while (s2[size_of_s2] != '\0')
 			size_of_s2++;
+
+	if (size_of_s1 + size_of_s2 + 1 > buffer_size)
+	{
+		*chars_printed += write(1, s1, size_of_s1);
+		free_temp(s1);
+		size_of_s1 = 0;
+	}
 
 	for (j = 0; j < size_of_s2; j++)
 		s1[size_of_s1 + j] = s2[j];
