@@ -7,7 +7,7 @@
  * _printf - function that prints formated text in standard output.
  * @format: text and format to be printed.
  *
- * Return: number of characters printed. -1 on error
+ * Return: number of characters printed. -1 on error.
  */
 
 int _printf(const char *format, ...)
@@ -29,19 +29,23 @@ int _printf(const char *format, ...)
 			count_conversion = count_id(format + i);
 			if (count_conversion == 0)
 				continue;
-			switch (*(format + i + count_conversion))
+			switch (*(format + i + 1))
 			{
 			case 'c':
 				concat_c(buffer, va_arg(args, int), &chars_printed);
+				i++;
 				break;
 			case 's':
 				j += concat(buffer, va_arg(args, char *), &chars_printed) - 1;
+				i++;
 				break;
 			case '%':
 				concat_c(buffer, '%', &chars_printed);
+				i++;
 				break;
+			default:
+				concat_c(buffer, '%', &chars_printed);
 			}
-			i += count_conversion;
 		}
 		else
 			concat_c(buffer, *(format + i), &chars_printed);
