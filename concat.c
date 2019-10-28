@@ -36,6 +36,45 @@ void free_temp(char *temp_s)
 }
 
 /**
+ * concat_i - Function that concatenate a strings with and int.
+ * @buffer: string base to add the next parameter.
+ * @integer: integer to add.
+ * @chars_printed: chars printed.
+ *
+ * Return: void.
+ */
+
+int concat_i(char *buffer, int integer, int *chars_printed)
+{
+	int max = 1000000000, temp = 0, result = 0;
+
+	if (integer == 0)
+	{
+		result += concat_c(buffer, '0', chars_printed);
+		return (result);
+	}
+	while (integer / max == 0)
+		max /= 10;
+	if (integer < 0)
+	{
+		result += concat_c(buffer, '-', chars_printed);
+		result += concat_c(buffer, -(integer / max) + '0', chars_printed);
+		integer %= max;
+		integer *= -1;
+		max /= 10;
+	}
+	while (max >= 1)
+	{
+		temp = integer / max;
+		result += concat_c(buffer, temp + '0', chars_printed);
+		integer -= max * temp;
+		max /= 10;
+	}
+	return (result);
+}
+
+
+/**
  * concat_c - Function that concatenate a strings with a char.
  * @buffer: string base to add the next parameter.
  * @character: character to add.
@@ -44,10 +83,11 @@ void free_temp(char *temp_s)
  * Return: String already concatenate
  */
 /*void concat_c(char *buffer, va_list args, int *chars_printed)*/
-void concat_c(char *buffer, int character, int *chars_printed)
+int concat_c(char *buffer, int character, int *chars_printed)
 {
 	char b[] = {'\0', '\0'};
 	char *temp_c = b;
+	int result = 0;
 
 	/*temp_d = va_arg(args, int);	if (temp_d == 0)] ????*/
 	if (character)
@@ -55,7 +95,8 @@ void concat_c(char *buffer, int character, int *chars_printed)
 	else
 		*(temp_c + 0) = ' ';
 	*(temp_c + 1) = '\0';
-	concat(buffer, temp_c, chars_printed);
+	result += concat(buffer, temp_c, chars_printed);
+	return (result);
 }
 
 /**
