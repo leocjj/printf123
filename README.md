@@ -4,7 +4,7 @@ C - printf.
 
 ## Learning Objectives
 
-* Write your own printf function
+* Write your own printf function.
 
 
 ### Requirements:
